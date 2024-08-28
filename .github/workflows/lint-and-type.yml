@@ -1,0 +1,36 @@
+name: Lint and Type
+
+on:
+   push:
+      branches: [main]
+   pull_request:
+      types: [opened, synchronize]
+
+jobs:
+   build:
+      runs-on: ubuntu-latest
+      strategy:
+         matrix:
+            node-version: [20]
+      steps:
+         - name: Checkout code
+           uses: actions/checkout@v3
+
+         - name: Setup pnpm
+           uses: pnpm/action-setup@v2
+           with:
+              version: 9
+
+         - name: Setup Node.js
+           uses: actions/setup-node@v3
+           with:
+              node-version: ${{ matrix.node-version }}
+              cache: "pnpm"
+              cache-dependency-path: "**/pnpm-lock.yaml"
+
+         - name: Install dependencies and run tests
+           run: |
+              pnpm install --frozen-lockfile
+              pnpm run test:format
+              pnpm run test:check-types
+              pnpm run test:lint

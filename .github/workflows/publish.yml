@@ -1,7 +1,6 @@
 name: Publish
 on:
    workflow_run:
-      workflows: [Lint and Type]
       branches: [main]
       types: [completed]
 

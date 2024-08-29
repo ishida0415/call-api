@@ -1,10 +1,6 @@
 name: Lint and Type
 
 on:
-   push:
-      branches: [main]
-   pull_request:
-      types: [opened, synchronize]
 
 jobs:
    build:
@@ -14,12 +10,6 @@ jobs:
             node-version: [20]
       steps:
          - name: Checkout code
-           uses: actions/checkout@v3
-
-         - name: Setup pnpm
-           uses: pnpm/action-setup@v2
-           with:
-              version: 9
 
          - name: Setup Node.js
            uses: actions/setup-node@v3
